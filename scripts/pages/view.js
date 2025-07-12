@@ -109,7 +109,12 @@ const ViewPage = {
             const boardGrid = page.querySelector('.board-grid');
             boardGrid.dataset.mode = mode;
             // Apply percent-based grid offsets for alignment
-            if (mode === 'regular mode') {
+            if (mode === 'regular mode' && board_type === 'hell') {
+                boardGrid.style.setProperty('--grid-offset-top', '10%'); // 6% + 4%
+                boardGrid.style.setProperty('--grid-offset-right', '5%');
+                boardGrid.style.setProperty('--grid-offset-bottom', '18%'); // 20% - 2%
+                boardGrid.style.setProperty('--grid-offset-left', '5%');
+            } else if (mode === 'regular mode') {
                 boardGrid.style.setProperty('--grid-offset-top', '6%');
                 boardGrid.style.setProperty('--grid-offset-right', '5%');
                 boardGrid.style.setProperty('--grid-offset-bottom', '20%');

@@ -138,6 +138,24 @@ function renderBoardGrid() {
         boardGrid.style.gridTemplateColumns = `repeat(${gridConfig.cols}, 1fr)`;
         boardGrid.style.gridTemplateRows = `repeat(${gridConfig.rows}, 1fr)`;
 
+        // Set grid offsets for regular/guild, and special case for 'hell'
+        if (currentMode === 'regular mode' && currentMap === 'hell') {
+            boardGrid.style.setProperty('--grid-offset-top', '10%'); // 6% + 4%
+            boardGrid.style.setProperty('--grid-offset-right', '5%');
+            boardGrid.style.setProperty('--grid-offset-bottom', '18%'); // 20% - 2%
+            boardGrid.style.setProperty('--grid-offset-left', '5%');
+        } else if (currentMode === 'regular mode') {
+            boardGrid.style.setProperty('--grid-offset-top', '6%');
+            boardGrid.style.setProperty('--grid-offset-right', '5%');
+            boardGrid.style.setProperty('--grid-offset-bottom', '20%');
+            boardGrid.style.setProperty('--grid-offset-left', '5%');
+        } else {
+            boardGrid.style.setProperty('--grid-offset-top', '8%');
+            boardGrid.style.setProperty('--grid-offset-right', '5%');
+            boardGrid.style.setProperty('--grid-offset-bottom', '11%');
+            boardGrid.style.setProperty('--grid-offset-left', '5%');
+        }
+
         for (let r = 0; r < gridConfig.rows; r++) {
             for (let c = 0; c < gridConfig.cols; c++) {
                 const cell = document.createElement('div');
