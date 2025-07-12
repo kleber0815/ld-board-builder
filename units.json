@@ -7,7 +7,7 @@
     { "name": "Wolf Warrior", "img": "assets/units/Epic/Wolf Warrior.webp", "label": "Wolf Warrior" }
   ],
   "immortal": [
-    { "name": "Immo_Bobma", "img": "assets/units/Immortal/Immo_Bobma.webp", "label": "Immo Bobma" }, 
+    { "name": "Immo_Bomba", "img": "assets/units/Immortal/Immo_Bomba.webp", "label": "Immo Bomba" }, 
     { "name": "Immo_Frog", "img": "assets/units/Immortal/Immo_Frog.webp", "label": "Immo Frog" }, 
     { "name": "Immo_Hailey", "img": "assets/units/Immortal/Immo_Hailey.webp", "label": "Immo Hailey" }, 
     { "name": "Immo_Mama", "img": "assets/units/Immortal/Immo_Mama.webp", "label": "Immo Mama" }, 
