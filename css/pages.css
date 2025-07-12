@@ -1,0 +1,432 @@
+/* CSS for specific pages and complex components */
+
+/* --- Builder Page --- */
+.page-builder .builder-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xl);
+}
+.page-builder .control-group {
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+}
+.page-builder .control-group h3 {
+    margin-bottom: var(--space-sm);
+    font-size: var(--text-lg);
+}
+.page-builder #mode-selection, .page-builder #map-selection {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-sm);
+}
+.page-builder #mode-selection .btn.active {
+    background-color: var(--color-primary);
+    color: white;
+    border-color: var(--color-primary);
+}
+.page-builder #map-selection .btn.active {
+    background-color: var(--color-primary);
+    color: white;
+    border-color: var(--color-primary);
+}
+
+.unit-palette-container .unit-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
+    gap: var(--space-sm);
+    min-height: 80px;
+    max-height: 120px;
+    overflow-y: auto;
+    padding: var(--space-sm);
+}
+.unit-selector {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+    background-color: var(--color-surface);
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+}
+/* Static background colors for unit rarities */
+.unit-selector[data-rarity="common"] { background-color: hsl(0, 0%, 85%); }
+.unit-selector[data-rarity="rare"] { background-color: hsl(210, 60%, 85%); }
+.unit-selector[data-rarity="epic"] { background-color: hsl(270, 50%, 88%); }
+.unit-selector[data-rarity="legendary"] { background-color: hsl(50, 80%, 85%); }
+.unit-selector[data-rarity="mythic"] { background-color: hsl(25, 85%, 80%); }
+.unit-selector[data-rarity="immortal"] { background-color: hsl(0, 70%, 85%); }
+
+.unit-selector:hover {
+    transform: scale(1.1);
+    border-color: var(--color-text-muted);
+}
+.unit-selector.selected {
+    border-color: var(--color-primary);
+    transform: scale(1.1);
+}
+
+
+#board-area {
+    padding: var(--space-lg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: auto; /* Allow scrolling if map is wider than container */
+}
+.board-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 600px; /* Desktop max, adjust as needed */
+    aspect-ratio: 6 / 3; /* Regular mode default, override for guild if needed */
+    margin: 0 auto;
+}
+.map-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+/* Unified grid styling for both Builder and View pages */
+.board-grid {
+    display: grid;
+    position: absolute;
+    inset: var(--grid-offset-top) var(--grid-offset-right) var(--grid-offset-bottom) var(--grid-offset-left);
+    max-width: none;
+    margin-inline: 0;
+    aspect-ratio: unset;
+    /* Add any other shared grid styles here */
+}
+
+.board-grid[data-mode="regular mode"] {
+    --grid-offset-top: 6%;
+    --grid-offset-right: 5%;
+    --grid-offset-bottom: 20%;
+    --grid-offset-left: 5%;
+}
+.board-grid[data-mode="guild"] {
+    --grid-offset-top: 8%;
+    --grid-offset-right: 5%;
+    --grid-offset-bottom: 11%;
+    --grid-offset-left: 5%;
+}
+
+.grid-cell {
+    border-right: 2px dashed #00000044;
+    border-bottom: 2px dashed #00000044;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Remove border from cells on the right edge */
+.board-grid .grid-cell:nth-child(6n) {
+    border-right: none;
+}
+/* Remove border from cells on the bottom edge */
+.board-grid .grid-cell:nth-last-child(-n+6) {
+    border-bottom: none;
+}
+
+.grid-cell:hover {
+    background-color: hsla(220, 90%, 56%, 0.2);
+}
+.unit-on-board {
+    width: 80%;
+    height: 80%;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    pointer-events: none;
+}
+
+/* --- Discover & Admin Page --- */
+
+.discover-header {
+    background-color: var(--color-surface);
+    padding-top: var(--space-lg);
+    padding-bottom: var(--space-lg);
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: var(--space-xl);
+}
+.discover-header .h1 {
+    color: var(--color-text); /* Ensures readability on light/dark mode */
+    text-align: center;
+    margin-bottom: var(--space-lg);
+}
+
+.discover-filters {
+    display: flex;
+    justify-content: center;
+}
+.filter-group {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    max-width: 500px;
+    width: 100%;
+}
+.filter-group:has(.filter-dropdown[open]) {
+    overflow: visible;
+}
+.filter-group:focus-within {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px var(--color-primary-focus);
+}
+
+.search-bar {
+    flex-grow: 1;
+    margin-bottom: 0; /* Override form-group margin */
+}
+.search-bar input {
+    width: 100%;
+    border: none;
+    background-color: transparent;
+    height: 100%;
+    padding: var(--space-sm) var(--space-md);
+}
+
+.filter-dropdown {
+    position: relative;
+    border-left: 1px solid var(--color-border);
+}
+.filter-dropdown summary {
+    background-color: var(--color-surface-2);
+    padding: var(--space-sm) var(--space-md);
+    cursor: pointer;
+    list-style: none; /* Remove marker */
+}
+.filter-dropdown summary::-webkit-details-marker {
+    display: none; /* Hide marker for Safari */
+}
+.filter-dropdown-content {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    padding: var(--space-md);
+    z-index: 10;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+}
+.map-filter-category strong {
+    display: block;
+    margin-bottom: var(--space-xs);
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: var(--space-xs);
+}
+.form-check {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--space-lg);
+}
+.page-discover .grid-container, .page-admin .grid-container {
+    justify-content: center;
+}
+.pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-md);
+}
+.pagination-controls .page-info {
+    font-size: var(--text-base);
+}
+
+/* --- View Page --- */
+.page-view .meta {
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-md);
+}
+.page-view .description {
+    background-color: var(--color-surface);
+    padding: var(--space-md);
+    border-left: 3px solid var(--color-primary);
+}
+
+/* View Page Actions */
+.view-actions .btn {
+    width: 100%;
+    max-width: 320px;
+    margin-bottom: var(--space-sm);
+}
+
+.view-actions .btn + .btn {
+    margin-left: var(--space-md);
+}
+
+@media (max-width: 600px) {
+    .view-actions .btn + .btn {
+        margin-left: 0;
+    }
+}
+
+/* Unit Palette Tabs */
+.unit-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: var(--space-md);
+}
+.tab-button {
+    padding: var(--space-sm) var(--space-md);
+    cursor: pointer;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--color-text-muted);
+    font-size: var(--text-base);
+    text-transform: capitalize;
+    margin-bottom: -1px; /* Overlap the container's border */
+}
+.tab-button.active {
+    color: var(--color-primary);
+    border-bottom-color: var(--color-primary);
+    font-weight: 600;
+}
+.tab-panel {
+    display: none;
+}
+.tab-panel.active {
+    display: block;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.admin-header {
+    background-color: var(--color-surface);
+    padding-top: var(--space-lg);
+    padding-bottom: var(--space-lg);
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: var(--space-xl);
+}
+.admin-header .h1 {
+    color: var(--color-text);
+    text-align: center;
+    margin-bottom: var(--space-lg);
+}
+
+.admin-filters {
+    display: flex;
+    justify-content: center;
+}
+
+.admin-filters .filter-group {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    max-width: 500px;
+    width: 100%;
+}
+.admin-filters .filter-group:focus-within {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px var(--color-primary-focus);
+}
+.admin-filters .search-bar {
+    flex-grow: 1;
+    margin-bottom: 0;
+}
+.admin-filters .search-bar input {
+    width: 100%;
+    border: none;
+    background-color: transparent;
+    height: 100%;
+    padding: var(--space-sm) var(--space-md);
+}
+.admin-filters .filter-dropdown {
+    position: relative;
+    border-left: 1px solid var(--color-border);
+}
+.admin-filters .filter-dropdown summary {
+    background-color: var(--color-surface-2);
+    padding: var(--space-sm) var(--space-md);
+    cursor: pointer;
+    list-style: none;
+}
+.admin-filters .filter-dropdown summary::-webkit-details-marker {
+    display: none;
+}
+.admin-filters .filter-dropdown-content {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    padding: var(--space-md);
+    z-index: 10;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+}
+.admin-filters .map-filter-category strong {
+    display: block;
+    margin-bottom: var(--space-xs);
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: var(--space-xs);
+}
+.admin-filters .form-check {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+}
+.admin-filters .filter-group:has(.filter-dropdown[open]) {
+    overflow: visible;
+}
+
+@media (max-width: 480px) {
+  .unit-palette-container .unit-list {
+    grid-template-columns: repeat(auto-fill, minmax(48px, 1fr));
+    max-height: 90px;
+  }
+  .unit-selector {
+    min-width: 32px;
+    max-width: 48px;
+  }
+}
+
+.builder-actions .btn {
+  width: 100%;
+  max-width: 320px;
+  margin-bottom: var(--space-sm);
+}
+
+@media (max-width: 600px) {
+  .filter-group label,
+  .filter-dropdown summary {
+    font-size: var(--text-sm);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.unit-tab-panels {
+  background: var(--color-surface-2, hsl(220 15% 96%));
+  border: 1px solid var(--color-border, hsl(220 10% 90%));
+  padding: var(--space-md);
+  margin-bottom: var(--space-lg);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+  transition: background 0.2s;
+}

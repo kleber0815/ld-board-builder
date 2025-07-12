@@ -1,0 +1,46 @@
+/* css/variables.css */
+
+:root {
+  /* Spacing Scale - Consistent spacing values */
+  --space-xs: 0.25rem;  /* 4px */
+  --space-sm: 0.5rem;   /* 8px */
+  --space-md: 1rem;     /* 16px */
+  --space-lg: 1.5rem;   /* 24px */
+  --space-xl: 2rem;     /* 32px */
+  --space-xxl: 3rem;    /* 48px */
+
+  /* Typography Scale - Fluid and responsive font sizes */
+  --text-xs: clamp(0.75rem, 2vw, 0.875rem);
+  --text-sm: clamp(0.875rem, 2.5vw, 1rem);
+  --text-base: clamp(1rem, 3vw, 1.125rem);
+  --text-lg: clamp(1.25rem, 4vw, 1.5rem);
+  --text-xl: clamp(1.5rem, 5vw, 2rem);
+  --text-xxl: clamp(2rem, 6vw, 3rem);
+
+  /* Colors - Light Theme (Warmer, Creamy White) */
+  --color-primary: hsl(220 90% 56%);
+  --color-primary-hover: hsl(220 90% 60%);
+  --color-surface: hsl(40 40% 97%);      /* Creamy white */
+  --color-surface-2: hsl(36 52% 92%);    /* Warm light beige */
+  --color-text: hsl(30 20% 20%);         /* Softer, warmer dark */
+  --color-text-muted: hsl(30 15% 40%);
+  --color-border: hsl(30 20% 85%);
+  --color-success: hsl(145 63% 42%);
+  --color-danger: hsl(354 70% 54%);
+  --color-grid-dot: hsla(30, 15%, 20%, 0.5);
+
+  /* Transitions */
+  --transition-speed: 0.2s;
+}
+
+[data-theme="dark"] {
+  /* Colors - Dark Theme */
+  --color-primary: hsl(220 90% 65%);
+  --color-primary-hover: hsl(220 90% 70%);
+  --color-surface: hsl(220 15% 12%);
+  --color-surface-2: hsl(220 15% 18%);
+  --color-text: hsl(220 10% 90%);
+  --color-text-muted: hsl(220 10% 60%);
+  --color-border: hsl(220 15% 30%);
+  --color-grid-dot: hsla(220, 10%, 20%, 0.5);
+} 
