@@ -1,6 +1,7 @@
 ﻿# LD Board Builder
 
 A web-based board builder application for the Lucky Defense game community. Create, share, and discover custom game board layouts with an intuitive drag-and-drop interface.
+
 This Project was fully build by the Cursor IDE AI.
 
 ## 🎮 Features
