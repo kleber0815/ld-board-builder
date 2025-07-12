@@ -1,65 +1,65 @@
 {
-  "common": [
-    { "name": "archer", "img": "assets/units/Common/archer.webp", "label": "Archer" }, 
-    { "name": "bandit", "img": "assets/units/Common/bandit.webp", "label": "Bandit" }, 
-    { "name": "barb", "img": "assets/units/Common/barb.webp", "label": "Barb" }, 
-    { "name": "slime", "img": "assets/units/Common/slime.webp", "label": "Slime" }, 
-    { "name": "thrower", "img": "assets/units/Common/thrower.webp", "label": "Thrower" }
+  "epic": [
+    { "name": "Eagle General", "img": "assets/units/Epic/Eagle General.webp", "label": "Eagle General" }, 
+    { "name": "Electro Robot", "img": "assets/units/Epic/Electro Robot.webp", "label": "Electro Robot" }, 
+    { "name": "Hunter", "img": "assets/units/Epic/Hunter.webp", "label": "Hunter" }, 
+    { "name": "Tree", "img": "assets/units/Epic/Tree.webp", "label": "Tree" }, 
+    { "name": "Wolf Warrior", "img": "assets/units/Epic/Wolf Warrior.webp", "label": "Wolf Warrior" }
   ],
   "immortal": [
-    { "name": "immo_bomba", "img": "assets/units/Immortal/immo_bomba.webp", "label": "Immo Bomba" }, 
-    { "name": "immo_frog", "img": "assets/units/Immortal/immo_frog.webp", "label": "Immo Frog" }, 
-    { "name": "immo_hailey", "img": "assets/units/Immortal/immo_hailey.webp", "label": "Immo Hailey" }, 
-    { "name": "immo_mama", "img": "assets/units/Immortal/immo_mama.webp", "label": "Immo Mama" }, 
-    { "name": "immo_ninja", "img": "assets/units/Immortal/immo_ninja.webp", "label": "Immo Ninja" }
-  ],
-  "epic": [
-    { "name": "eagle", "img": "assets/units/Epic/eagle.webp", "label": "Eagle" }, 
-    { "name": "hunter", "img": "assets/units/Epic/hunter.webp", "label": "Hunter" }, 
-    { "name": "stun2", "img": "assets/units/Epic/stun2.webp", "label": "Stun2" }, 
-    { "name": "tree", "img": "assets/units/Epic/tree.webp", "label": "Tree" }, 
-    { "name": "wolve", "img": "assets/units/Epic/wolve.webp", "label": "Wolve" }
+    { "name": "Immo_Bobma", "img": "assets/units/Immortal/Immo_Bobma.webp", "label": "Immo Bobma" }, 
+    { "name": "Immo_Frog", "img": "assets/units/Immortal/Immo_Frog.webp", "label": "Immo Frog" }, 
+    { "name": "Immo_Hailey", "img": "assets/units/Immortal/Immo_Hailey.webp", "label": "Immo Hailey" }, 
+    { "name": "Immo_Mama", "img": "assets/units/Immortal/Immo_Mama.webp", "label": "Immo Mama" }, 
+    { "name": "Immo_Ninja", "img": "assets/units/Immortal/Immo_Ninja.webp", "label": "Immo Ninja" }
   ],
   "legendary": [
-    { "name": "sheriff", "img": "assets/units/Legendary/sheriff.webp", "label": "Sheriff" }, 
-    { "name": "stormgiant", "img": "assets/units/Legendary/stormgiant.webp", "label": "Stormgiant" }, 
-    { "name": "tiger", "img": "assets/units/Legendary/tiger.webp", "label": "Tiger" }, 
-    { "name": "warmachine", "img": "assets/units/Legendary/warmachine.webp", "label": "Warmachine" }
+    { "name": "Sheriff", "img": "assets/units/Legendary/Sheriff.webp", "label": "Sheriff" }, 
+    { "name": "Storm Giant", "img": "assets/units/Legendary/Storm Giant.webp", "label": "Storm Giant" }, 
+    { "name": "Tiger Master", "img": "assets/units/Legendary/Tiger Master.webp", "label": "Tiger Master" }, 
+    { "name": "War Machine", "img": "assets/units/Legendary/War Machine.webp", "label": "War Machine" }
+  ],
+  "common": [
+    { "name": "Archer", "img": "assets/units/Common/Archer.webp", "label": "Archer" }, 
+    { "name": "Bandit", "img": "assets/units/Common/Bandit.webp", "label": "Bandit" }, 
+    { "name": "Barbarian", "img": "assets/units/Common/Barbarian.webp", "label": "Barbarian" }, 
+    { "name": "Thrower", "img": "assets/units/Common/Thrower.webp", "label": "Thrower" }, 
+    { "name": "Water Element", "img": "assets/units/Common/Water Element.webp", "label": "Water Element" }
   ],
   "rare": [
-    { "name": "archer2", "img": "assets/units/Rare/archer2.webp", "label": "Archer2" }, 
-    { "name": "devil", "img": "assets/units/Rare/devil.webp", "label": "Devil" }, 
-    { "name": "paladin", "img": "assets/units/Rare/paladin.webp", "label": "Paladin" }, 
-    { "name": "star", "img": "assets/units/Rare/star.webp", "label": "Star" }, 
-    { "name": "stun1", "img": "assets/units/Rare/stun1.webp", "label": "Stun1" }
+    { "name": "Demon Soldier", "img": "assets/units/Rare/Demon Soldier.webp", "label": "Demon Soldier" }, 
+    { "name": "Paladin", "img": "assets/units/Rare/Paladin.webp", "label": "Paladin" }, 
+    { "name": "Ranger", "img": "assets/units/Rare/Ranger.webp", "label": "Ranger" }, 
+    { "name": "Sandman", "img": "assets/units/Rare/Sandman.webp", "label": "Sandman" }, 
+    { "name": "Shock Robot", "img": "assets/units/Rare/Shock Robot.webp", "label": "Shock Robot" }
   ],
   "mythic": [
-    { "name": "batman", "img": "assets/units/Mythic/batman.webp", "label": "Batman" }, 
-    { "name": "blob", "img": "assets/units/Mythic/blob.webp", "label": "Blob" }, 
-    { "name": "bomba", "img": "assets/units/Mythic/bomba.webp", "label": "Bomba" }, 
-    { "name": "chu", "img": "assets/units/Mythic/chu.webp", "label": "Chu" }, 
-    { "name": "coldy", "img": "assets/units/Mythic/coldy.webp", "label": "Coldy" }, 
-    { "name": "dragon", "img": "assets/units/Mythic/dragon.webp", "label": "Dragon" }, 
-    { "name": "drain", "img": "assets/units/Mythic/drain.webp", "label": "Drain" }, 
-    { "name": "frog", "img": "assets/units/Mythic/frog.webp", "label": "Frog" }, 
-    { "name": "grav", "img": "assets/units/Mythic/grav.webp", "label": "Grav" }, 
-    { "name": "hailey", "img": "assets/units/Mythic/hailey.webp", "label": "Hailey" }, 
-    { "name": "indy", "img": "assets/units/Mythic/indy.webp", "label": "Indy" }, 
-    { "name": "kitty", "img": "assets/units/Mythic/kitty.webp", "label": "Kitty" }, 
-    { "name": "kun", "img": "assets/units/Mythic/kun.webp", "label": "Kun" }, 
-    { "name": "lance", "img": "assets/units/Mythic/lance.webp", "label": "Lance" }, 
-    { "name": "mama", "img": "assets/units/Mythic/mama.webp", "label": "Mama" }, 
-    { "name": "meow", "img": "assets/units/Mythic/meow.webp", "label": "Meow" }, 
-    { "name": "mono", "img": "assets/units/Mythic/mono.webp", "label": "Mono" }, 
-    { "name": "ninja", "img": "assets/units/Mythic/ninja.webp", "label": "Ninja" }, 
-    { "name": "penguin", "img": "assets/units/Mythic/penguin.webp", "label": "Penguin" }, 
-    { "name": "pulse", "img": "assets/units/Mythic/pulse.webp", "label": "Pulse" }, 
-    { "name": "shaman", "img": "assets/units/Mythic/shaman.webp", "label": "Shaman" }, 
-    { "name": "tao", "img": "assets/units/Mythic/tao.webp", "label": "Tao" }, 
-    { "name": "tar", "img": "assets/units/Mythic/tar.webp", "label": "Tar" }, 
-    { "name": "vayne", "img": "assets/units/Mythic/vayne.webp", "label": "Vayne" }, 
-    { "name": "verdee", "img": "assets/units/Mythic/verdee.webp", "label": "Verdee" }, 
-    { "name": "watt", "img": "assets/units/Mythic/watt.webp", "label": "Watt" }, 
-    { "name": "zap", "img": "assets/units/Mythic/zap.webp", "label": "Zap" }
+    { "name": "Batman", "img": "assets/units/Mythic/Batman.webp", "label": "Batman" }, 
+    { "name": "Blob", "img": "assets/units/Mythic/Blob.webp", "label": "Blob" }, 
+    { "name": "Bomba", "img": "assets/units/Mythic/Bomba.webp", "label": "Bomba" }, 
+    { "name": "Coldy", "img": "assets/units/Mythic/Coldy.webp", "label": "Coldy" }, 
+    { "name": "Dragon", "img": "assets/units/Mythic/Dragon.webp", "label": "Dragon" }, 
+    { "name": "Drain", "img": "assets/units/Mythic/Drain.webp", "label": "Drain" }, 
+    { "name": "Frog Prince", "img": "assets/units/Mythic/Frog Prince.webp", "label": "Frog Prince" }, 
+    { "name": "Graviton", "img": "assets/units/Mythic/Graviton.webp", "label": "Graviton" }, 
+    { "name": "Hailey", "img": "assets/units/Mythic/Hailey.webp", "label": "Hailey" }, 
+    { "name": "Indy", "img": "assets/units/Mythic/Indy.webp", "label": "Indy" }, 
+    { "name": "Iron Meow", "img": "assets/units/Mythic/Iron Meow.webp", "label": "Iron Meow" }, 
+    { "name": "Kitty Mage", "img": "assets/units/Mythic/Kitty Mage.webp", "label": "Kitty Mage" }, 
+    { "name": "Lancelot", "img": "assets/units/Mythic/Lancelot.webp", "label": "Lancelot" }, 
+    { "name": "Lazy Taoist", "img": "assets/units/Mythic/Lazy Taoist.webp", "label": "Lazy Taoist" }, 
+    { "name": "Mama", "img": "assets/units/Mythic/Mama.webp", "label": "Mama" }, 
+    { "name": "Master Kun", "img": "assets/units/Mythic/Master Kun.webp", "label": "Master Kun" }, 
+    { "name": "Monopoly Man", "img": "assets/units/Mythic/Monopoly Man.webp", "label": "Monopoly Man" }, 
+    { "name": "Ninja", "img": "assets/units/Mythic/Ninja.webp", "label": "Ninja" }, 
+    { "name": "Orc Shaman", "img": "assets/units/Mythic/Orc Shaman.webp", "label": "Orc Shaman" }, 
+    { "name": "Penguin Musician", "img": "assets/units/Mythic/Penguin Musician.webp", "label": "Penguin Musician" }, 
+    { "name": "Pulse Generator", "img": "assets/units/Mythic/Pulse Generator.webp", "label": "Pulse Generator" }, 
+    { "name": "Rocket Chu", "img": "assets/units/Mythic/Rocket Chu.webp", "label": "Rocket Chu" }, 
+    { "name": "Tar", "img": "assets/units/Mythic/Tar.webp", "label": "Tar" }, 
+    { "name": "Vayne", "img": "assets/units/Mythic/Vayne.webp", "label": "Vayne" }, 
+    { "name": "Verdee", "img": "assets/units/Mythic/Verdee.webp", "label": "Verdee" }, 
+    { "name": "Watt", "img": "assets/units/Mythic/Watt.webp", "label": "Watt" }, 
+    { "name": "Zap", "img": "assets/units/Mythic/Zap.webp", "label": "Zap" }
   ]
 }
