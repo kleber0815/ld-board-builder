@@ -3,10 +3,15 @@ import { showInfoModal } from '../components/modal.js';
 
 // Screenshot function for view page
 async function takeScreenshot(boardElement, mode, title) {
-    // Determine mode and set target size
-    const isGuild = (mode === 'guild');
-    const width = 600;
-    const height = isGuild ? 420 : 300;
+    // Set fixed size based on mode, matching aspect ratio
+    let width, height;
+    if (mode === 'guild') {
+        width = 600;
+        height = 500; // 6:5 aspect ratio
+    } else {
+        width = 600;
+        height = 300; // 2:1 aspect ratio
+    }
 
     // Clone the board and set fixed size
     const clone = boardElement.cloneNode(true);
