@@ -16,7 +16,7 @@ const HomePage = {
             </section>
 
             <section class="recent-boards container mt-lg">
-                <h2 class="h2">Recent Public Boards</h2>
+                <h2 class="h2">Recently created Boards</h2>
                 <div id="recent-boards-grid" class="grid-container">
                     <p>Loading recent boards...</p>
                 </div>
@@ -38,7 +38,7 @@ const HomePage = {
                 const cards = await Promise.all(cardPromises);
                 cards.forEach(card => grid.appendChild(card));
             } else {
-                grid.innerHTML = '<p>No recent public boards found. Be the first to create one!</p>';
+                grid.innerHTML = '<p>No public boards found. Be the first to create one!</p>';
             }
         } catch (error) {
             console.error('Error fetching recent boards:', error);
