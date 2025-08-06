@@ -105,7 +105,7 @@ export async function deleteBoard(id) {
  * @param {string} options.titleSearch - The title search query.
  * @returns {Promise<{data: Array, count: number}>} A promise that resolves to the data and total count.
  */
-export async function getDiscoverBoards({ page = 1, limit = 9, mapFilter = [], titleSearch = '' }) {
+export async function getDiscoverBoards({ page = 1, limit = 8, mapFilter = [], titleSearch = '' }) {
     const from = (page - 1) * limit;
     const to = from + limit - 1;
 

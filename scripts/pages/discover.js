@@ -3,7 +3,7 @@ import { createBoardCard } from '../components/boardCard.js';
 import { debounce } from '../utils.js';
 
 let currentPage = 1;
-const limit = 9;
+const limit = 8;
 let currentFilters = { mapFilter: '', titleSearch: '' };
 let totalBoards = 0;
 
