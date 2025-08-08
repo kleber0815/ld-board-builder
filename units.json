@@ -62,6 +62,7 @@
     { "name": "Immo_Frog", "img": "assets/units/Immortal/Immo_Frog.webp", "label": "Immo Frog" },
     { "name": "Immo_Hailey", "img": "assets/units/Immortal/Immo_Hailey.webp", "label": "Immo Hailey" },
     { "name": "Immo_Mama", "img": "assets/units/Immortal/Immo_Mama.webp", "label": "Immo Mama" },
-    { "name": "Immo_Ninja", "img": "assets/units/Immortal/Immo_Ninja.webp", "label": "Immo Ninja" }
+    { "name": "Immo_Ninja", "img": "assets/units/Immortal/Immo_Ninja.webp", "label": "Immo Ninja" },
+    { "name": "Immo_Pulse", "img": "assets/units/Immortal/Immo_Pulse.webp", "label": "Immo Pulse" }
   ]
 }
