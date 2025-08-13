@@ -21,6 +21,7 @@ const MAPS = {
         { id: 'primeval', name: 'Primeval', img: 'assets/boards/regular mode/primeval.webp' },
     ],
     guild: [
+        { id: 'graid', name: 'Guild Raid', img: 'assets/boards/guild battle/graid.webp' },
         { id: 'gbboard', name: 'Guild Battle', img: 'assets/boards/guild battle/gbboard.webp' }
     ]
 };
@@ -129,8 +130,8 @@ function renderBoardGrid() {
     // Show loading state for grid
     boardGrid.innerHTML = '<p>Loading map...</p>';
 
-    // Set up an onload event for the image
-    mapImageEl.onload = () => {
+    // Function to render the grid content
+    const renderGridContent = () => {
         // Clear and configure the grid overlay now that the image is loaded
         boardGrid.innerHTML = '';
         boardGrid.className = 'board-grid';
@@ -178,12 +179,28 @@ function renderBoardGrid() {
         }
     };
 
-    mapImageEl.onerror = () => {
+    const handleImageError = () => {
         boardGrid.innerHTML = '<p class="text-danger">Failed to load map image.</p>';
     };
 
-    // Set the map image source to trigger loading
-    mapImageEl.src = mapData.img;
+    // Clean up any existing event listeners to prevent memory leaks
+    mapImageEl.removeEventListener('load', renderGridContent);
+    mapImageEl.removeEventListener('error', handleImageError);
+    
+    // Check if the image we want is already loaded
+    if (mapImageEl.src.endsWith(mapData.img.split('/').pop()) && mapImageEl.complete && mapImageEl.naturalHeight !== 0) {
+        // Same image is already loaded, render immediately
+        renderGridContent();
+    } else {
+        // Set up new event listeners
+        mapImageEl.addEventListener('load', renderGridContent, { once: true });
+        mapImageEl.addEventListener('error', handleImageError, { once: true });
+        
+        // Set the map image source to trigger loading
+        mapImageEl.src = mapData.img;
+    }
+    
+    // Set the alt text regardless of loading state
     mapImageEl.alt = `Map: ${mapData.name}`;
 }
 
@@ -198,10 +215,11 @@ function handleModeChange(newMode) {
     if (currentMode === newMode) return;
     currentMode = newMode;
 
-    if (currentMode === 'guild') {
-        mapSelectionContainer.style.display = 'none';
-    } else {
+    // Show map selection if there are multiple maps for the current mode
+    if (MAPS[currentMode].length > 1) {
         mapSelectionContainer.style.display = 'block';
+    } else {
+        mapSelectionContainer.style.display = 'none';
     }
 
     // Set default map for the new mode and clear the board
@@ -401,8 +419,8 @@ const BuilderPage = {
                 <div class="control-group">
                     <h3>Game Mode</h3>
                     <div id="mode-selection">
-                        <button class="btn btn-secondary active" data-mode="regular mode">Regular Mode</button>
-                        <button class="btn btn-secondary" data-mode="guild">Guild Battle</button>
+                        <button class="btn btn-secondary active" data-mode="regular mode">Co-op Modes</button>
+                        <button class="btn btn-secondary" data-mode="guild">Guild Modes</button>
                     </div>
                 </div>
                 <div class="control-group" data-control="map-selection">

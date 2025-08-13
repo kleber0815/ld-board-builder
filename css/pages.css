@@ -38,7 +38,6 @@
     grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
     gap: var(--space-sm);
     min-height: 80px;
-    max-height: 120px;
     overflow-y: auto;
     padding: var(--space-sm);
 }
@@ -276,6 +275,12 @@
 @media (max-width: 600px) {
     .view-actions .btn + .btn {
         margin-left: 0;
+    }
+}
+
+@media (max-width: 800px) {
+    .unit-palette-container .unit-list {
+        max-height: 160px;
     }
 }
 
