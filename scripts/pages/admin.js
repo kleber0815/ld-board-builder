@@ -15,7 +15,8 @@ const maps = {
         { id: 'primeval', name: 'Primeval' }
     ],
     "Guild Maps": [
-        { id: 'gbboard', name: 'Guild Battle' }
+        { id: 'gbboard', name: 'Guild Battle' },
+        { id: 'graid', name: 'Guild Raid' }
     ]
 };
 const mapFilterCheckboxes = Object.entries(maps).map(([category, mapList]) => `
@@ -98,6 +99,8 @@ async function handleDelete(boardId) {
 
 const AdminPage = {
     async render() {
+        allBoards = [];
+        pageElement = null;
         pageElement = document.createElement('div');
         pageElement.className = 'page page-admin';
         pageElement.innerHTML = `

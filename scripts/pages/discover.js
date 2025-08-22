@@ -9,6 +9,10 @@ let totalBoards = 0;
 
 const DiscoverPage = {
     async render() {
+        currentPage = 1;
+        currentFilters = { mapFilter: '', titleSearch: '' };
+        totalBoards = 0;
+
         const page = document.createElement('div');
         page.className = 'page page-discover';
 
@@ -22,7 +26,8 @@ const DiscoverPage = {
                 { id: 'primeval', name: 'Primeval' }
             ],
             "Guild Maps": [
-                { id: 'gbboard', name: 'Guild Battle' }
+                { id: 'gbboard', name: 'Guild Battle' },
+                { id: 'graid', name: 'Guild Raid' }
             ]
         };
         const mapFilterCheckboxes = Object.entries(maps).map(([category, mapList]) => `
