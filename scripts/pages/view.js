@@ -7,10 +7,13 @@ async function takeScreenshot(boardElement, mode, title) {
     let width, height;
     if (mode === 'guild') {
         width = 600;
-        height = 500; // 6:5 aspect ratio
+        height = 330;
+    } else if (mode === 'challenge') {
+        width = 600;
+        height = 420; // Reduced from 500px to remove empty space
     } else {
         width = 600;
-        height = 300; // 2:1 aspect ratio
+        height = 300;
     }
 
     // Clone the board and set fixed size
@@ -25,6 +28,37 @@ async function takeScreenshot(boardElement, mode, title) {
     clone.style.backgroundColor = 'transparent';
     document.body.appendChild(clone);
 
+    // SPECIAL HANDLING FOR CHALLENGE MODE SCREENSHOT
+    if (mode === 'challenge') {
+        const gridClone = clone.querySelector('.board-grid');
+        if (gridClone) {
+            // Adjust the grid offsets for the screenshot specifically
+            // Convert percentage offsets to fixed pixels based on original 500px height
+            gridClone.style.top = '22px';    // 500px * 13% = 65px
+            gridClone.style.right = '30px';  // 600px * 5% = 30px
+            gridClone.style.bottom = '40px'; // 500px * 16% = 80px
+            gridClone.style.left = '30px';   // 600px * 5% = 30px
+            
+            // Override the CSS variable usage with fixed pixel values
+            gridClone.style.inset = '22px 30px 40px 30px';
+        }
+    }
+
+    if (mode === 'guild') {
+        const gridClone = clone.querySelector('.board-grid');
+        if (gridClone) {
+            // Adjust the grid offsets for the screenshot specifically
+            // Convert percentage offsets to fixed pixels based on original 400px height
+            gridClone.style.top = '24px';    // 400px * 17% = 68px
+            gridClone.style.right = '30px';  // 600px * 5% = 30px
+            gridClone.style.bottom = '40px'; // 400px * 20% = 80px
+            gridClone.style.left = '30px';   // 600px * 5% = 30px
+            
+            // Override the CSS variable usage with fixed pixel values
+            gridClone.style.inset = '22px 30px 40px 30px';
+        }
+    }
+    
     try {
         const canvas = await html2canvas(clone, {
             useCORS: true,
@@ -68,7 +102,7 @@ const ViewPage = {
         this.afterRender(page, boardId);
         return page;
     },
-
+    
     async afterRender(page, boardId) {
         try {
             const board = await getBoardById(boardId);
@@ -81,14 +115,26 @@ const ViewPage = {
             const units = board_data.units || [];
             const createdAtDate = new Date(created_at).toLocaleString();
 
-            // Determine grid configuration and map image based on mode
-            const gridConfig = mode === 'regular mode' ? { rows: 3, cols: 6 } : { rows: 5, cols: 6 };
-            // Encode spaces in the path for the background image
-            const mapImage = `assets/boards/${mode === 'regular mode' ? 'regular mode' : 'guild battle'}/${board_type}.webp`.replace(/ /g, '%20');
+            // Determine grid configuration based on mode
+            let gridConfig;
+            if (mode === 'regular mode') {
+                gridConfig = { rows: 3, cols: 6 };
+            } else if (mode === 'guild') {
+                gridConfig = { rows: 4, cols: 6 }; // Changed from 5 to 4 for Guild Raid
+            } else if (mode === 'challenge') {
+                gridConfig = { rows: 5, cols: 6 }; // New category for Guild Battle
+            }
+
+            // Update path construction for map images
+            const modePath = mode === 'regular mode' ? 'regular mode' : 
+                            mode === 'guild' ? 'guild' : 
+                            'challenge'; // New path for challenge mode
+            const mapImage = `assets/boards/${modePath}/${board_type}.webp`.replace(/ /g, '%20');
 
             const isGuild = mode === 'guild';
-            const backgroundSize = isGuild ? 'contain' : 'cover';
-            const aspectRatio = isGuild ? '6 / 5' : '6 / 3';
+            const isChallenge = mode === 'challenge';
+            const backgroundSize = (isGuild || isChallenge) ? 'contain' : 'cover';
+            const aspectRatio = isGuild ? '6 / 4' : isChallenge ? '6 / 5' : '6 / 3'; // Updated aspect ratios
 
             // Set the page HTML before selecting the grid
             page.innerHTML = `
@@ -113,6 +159,7 @@ const ViewPage = {
             // Now select the grid from the newly set HTML
             const boardGrid = page.querySelector('.board-grid');
             boardGrid.dataset.mode = mode;
+            
             // Apply percent-based grid offsets for alignment
             if (mode === 'regular mode' && board_type === 'hell') {
                 boardGrid.style.setProperty('--grid-offset-top', '10%'); // 6% + 4%
@@ -124,11 +171,16 @@ const ViewPage = {
                 boardGrid.style.setProperty('--grid-offset-right', '5%');
                 boardGrid.style.setProperty('--grid-offset-bottom', '20%');
                 boardGrid.style.setProperty('--grid-offset-left', '5%');
-            } else {
-                boardGrid.style.setProperty('--grid-offset-top', '14%');
-                boardGrid.style.setProperty('--grid-offset-right', '4%');
+            } else if (mode === 'guild') {
+                boardGrid.style.setProperty('--grid-offset-top', '17%');
+                boardGrid.style.setProperty('--grid-offset-right', '5%');
+                boardGrid.style.setProperty('--grid-offset-bottom', '20%');
+                boardGrid.style.setProperty('--grid-offset-left', '5%');
+            } else if (mode === 'challenge') {
+                boardGrid.style.setProperty('--grid-offset-top', '13%');
+                boardGrid.style.setProperty('--grid-offset-right', '5%');
                 boardGrid.style.setProperty('--grid-offset-bottom', '16%');
-                boardGrid.style.setProperty('--grid-offset-left', '4%');
+                boardGrid.style.setProperty('--grid-offset-left', '5%');
             }
             boardGrid.style.position = 'absolute';
             boardGrid.style.inset = 'var(--grid-offset-top) var(--grid-offset-right) var(--grid-offset-bottom) var(--grid-offset-left)';

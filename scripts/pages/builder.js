@@ -11,7 +11,8 @@ let selectedUnit = null;
 
 // --- Constants ---
 const REGULAR_GRID = { rows: 3, cols: 6 };
-const GUILD_GRID = { rows: 5, cols: 6 };
+const GUILD_GRID = { rows: 4, cols: 6 };
+const CHALLENGE_GRID = { rows: 5, cols: 6 };
 const MAPS = {
     'regular mode': [
         { id: 'normal', name: 'Normal', img: 'assets/boards/regular mode/normal.webp' },
@@ -21,8 +22,10 @@ const MAPS = {
         { id: 'primeval', name: 'Primeval', img: 'assets/boards/regular mode/primeval.webp' },
     ],
     guild: [
-        { id: 'graid', name: 'Guild Raid', img: 'assets/boards/guild battle/graid.webp' },
-        { id: 'gbboard', name: 'Guild Battle', img: 'assets/boards/guild battle/gbboard.webp' }
+        { id: 'graid', name: 'Guild Raid', img: 'assets/boards/guild/graid.webp' },
+    ],
+    challenge: [
+        { id: 'extreme', name: 'Extreme Mode', img: 'assets/boards/challenge/extreme.webp' }
     ]
 };
 
@@ -123,7 +126,15 @@ function renderUnitPalette() {
 
 /** Renders the board grid based on the current mode */
 function renderBoardGrid() {
-    const gridConfig = currentMode === 'regular mode' ? REGULAR_GRID : GUILD_GRID;
+    let gridConfig;
+    if (currentMode === 'regular mode') {
+        gridConfig = REGULAR_GRID;
+    } else if (currentMode === 'guild') {
+        gridConfig = GUILD_GRID; // Now 6x4 for Guild Raid
+    } else if (currentMode === 'challenge') {
+        gridConfig = CHALLENGE_GRID; // 6x5 for Guild Battle
+    }
+
     const mapData = MAPS[currentMode].find(m => m.id === currentMap);
     const mapImageEl = boardArea.querySelector('.map-image');
 
@@ -139,24 +150,30 @@ function renderBoardGrid() {
         boardGrid.style.gridTemplateColumns = `repeat(${gridConfig.cols}, 1fr)`;
         boardGrid.style.gridTemplateRows = `repeat(${gridConfig.rows}, 1fr)`;
 
-        // Set grid offsets for regular/guild, and special case for 'hell'
+        // Set grid offsets based on mode and specific maps
         if (currentMode === 'regular mode' && currentMap === 'hell') {
-            boardGrid.style.setProperty('--grid-offset-top', '10%'); // 6% + 4%
+            boardGrid.style.setProperty('--grid-offset-top', '10%');
             boardGrid.style.setProperty('--grid-offset-right', '5%');
-            boardGrid.style.setProperty('--grid-offset-bottom', '18%'); // 20% - 2%
+            boardGrid.style.setProperty('--grid-offset-bottom', '18%');
             boardGrid.style.setProperty('--grid-offset-left', '5%');
         } else if (currentMode === 'regular mode') {
             boardGrid.style.setProperty('--grid-offset-top', '6%');
             boardGrid.style.setProperty('--grid-offset-right', '5%');
             boardGrid.style.setProperty('--grid-offset-bottom', '20%');
             boardGrid.style.setProperty('--grid-offset-left', '5%');
-        } else {
+        } else if (currentMode === 'guild') {
             boardGrid.style.setProperty('--grid-offset-top', '8%');
             boardGrid.style.setProperty('--grid-offset-right', '5%');
-            boardGrid.style.setProperty('--grid-offset-bottom', '11%');
+            boardGrid.style.setProperty('--grid-offset-bottom', '14%');
+            boardGrid.style.setProperty('--grid-offset-left', '5%');
+        } else if (currentMode === 'challenge') {
+            boardGrid.style.setProperty('--grid-offset-top', '6%');
+            boardGrid.style.setProperty('--grid-offset-right', '5%');
+            boardGrid.style.setProperty('--grid-offset-bottom', '10%');
             boardGrid.style.setProperty('--grid-offset-left', '5%');
         }
 
+        // ... rest of the function remains the same
         for (let r = 0; r < gridConfig.rows; r++) {
             for (let c = 0; c < gridConfig.cols; c++) {
                 const cell = document.createElement('div');
@@ -281,9 +298,17 @@ function renderMapButtons() {
 async function takeScreenshot() {
     const boardElement = pageElement.querySelector('.board-wrapper');
     // Determine mode and set target size
-    const isGuild = (currentMode === 'guild');
-    const width = 600;
-    const height = isGuild ? 420 : 300;
+    let width, height;
+    if (currentMode === 'guild') {
+        width = 600;
+        height = 330; // Reduced from 400px
+    } else if (currentMode === 'challenge') {
+        width = 600;
+        height = 420; // Reduced from 500px
+    } else {
+        width = 600;
+        height = 300;
+    }
 
     // Clone the board and set fixed size
     const clone = boardElement.cloneNode(true);
@@ -293,7 +318,41 @@ async function takeScreenshot() {
     clone.style.left = '-9999px';
     clone.style.top = '0';
     clone.style.zIndex = '-1';
+    // Remove background color to make it transparent
+    clone.style.backgroundColor = 'transparent';
     document.body.appendChild(clone);
+
+    // SPECIAL HANDLING FOR GUILD MODE SCREENSHOT (400px → 330px)
+    if (currentMode === 'guild') {
+        const gridClone = clone.querySelector('.board-grid');
+        if (gridClone) {
+            // Adjust the grid offsets for the screenshot specifically
+            // Convert percentage offsets to fixed pixels based on original 400px height
+            gridClone.style.top = '22px';    // 400px * 17% = 68px
+            gridClone.style.right = '30px';  // 600px * 5% = 30px
+            gridClone.style.bottom = '40px'; // 400px * 20% = 80px
+            gridClone.style.left = '30px';   // 600px * 5% = 30px
+            
+            // Override the CSS variable usage with fixed pixel values
+            gridClone.style.inset = '22px 30px 40px 30px';
+        }
+    }
+
+    // SPECIAL HANDLING FOR CHALLENGE MODE SCREENSHOT (500px → 420px)
+    if (currentMode === 'challenge') {
+        const gridClone = clone.querySelector('.board-grid');
+        if (gridClone) {
+            // Adjust the grid offsets for the screenshot specifically
+            // Convert percentage offsets to fixed pixels based on original 500px height
+            gridClone.style.top = '24px';    // 500px * 13% = 65px
+            gridClone.style.right = '30px';  // 600px * 5% = 30px
+            gridClone.style.bottom = '40px'; // 500px * 16% = 80px
+            gridClone.style.left = '30px';   // 600px * 5% = 30px
+            
+            // Override the CSS variable usage with fixed pixel values
+            gridClone.style.inset = '24px 30px 40px 30px';
+        }
+    }
 
     try {
         const canvas = await html2canvas(clone, {
@@ -421,6 +480,7 @@ const BuilderPage = {
                     <div id="mode-selection">
                         <button class="btn btn-secondary active" data-mode="regular mode">Co-op Modes</button>
                         <button class="btn btn-secondary" data-mode="guild">Guild Modes</button>
+                        <button class="btn btn-secondary" data-mode="challenge">Challenge Modes</button>
                     </div>
                 </div>
                 <div class="control-group" data-control="map-selection">

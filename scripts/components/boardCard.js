@@ -38,11 +38,12 @@ async function generateBoardPreview(board) {
                 cols: 6
             };
             
-            // Margins calculated from original image dimensions and CSS.
             // These are percentages to apply to the drawn image size.
             const margins = board.mode === 'regular mode'
-                ? { top: 0.12, right: 0.065, bottom: 0.20, left: 0.08 }
-                : { top: 0.05, right: 0.045, bottom: 0.10, left: 0.045 };
+            ? { top: 0.12, right: 0.065, bottom: 0.20, left: 0.08 }
+            : board.mode === 'guild'
+            ? { top: 0.12, right: 0.045, bottom: 0.15, left: 0.045 } // Guild Raid (6x4)
+            : { top: 0.08, right: 0.045, bottom: 0.11, left: 0.045 }; // Guild Battle/Challenge (6x5)
 
             const marginTop = drawHeight * margins.top;
             const marginRight = drawWidth * margins.right;
@@ -158,18 +159,27 @@ async function generateBoardPreview(board) {
         };
 
         boardImage.onerror = () => {
-             // If the board background fails, resolve with the canvas as-is (with its background color)
-            console.error(`Failed to load board image: /assets/boards/${board.board_type}/${board.mode}.webp`);
+            // If the board background fails, resolve with the canvas as-is (with its background color)
+            console.error(`Failed to load board image: ${getBoardPath(board.mode, board.board_type)}`);
             resolve(canvas.toDataURL('image/webp'));
         };
         
         // Construct the path to the board background image
-        // e.g., /assets/boards/guild battle/gbboard.webp
-        const boardMapImage = board.mode === 'regular mode'
-            ? `/assets/boards/regular mode/${board.board_type}.webp`
-            : `/assets/boards/guild battle/${board.board_type}.webp`;
-
+        const boardMapImage = getBoardPath(board.mode, board.board_type);
         boardImage.src = boardMapImage;
+        
+        // Helper function to get the correct board path
+        function getBoardPath(mode, boardType) {
+            if (mode === 'regular mode') {
+                return `/assets/boards/regular mode/${boardType}.webp`;
+            } else if (mode === 'guild') {
+                return `/assets/boards/guild/${boardType}.webp`;
+            } else if (mode === 'challenge') {
+                return `/assets/boards/challenge/${boardType}.webp`;
+            }
+            // Fallback in case of unknown mode
+            return `/assets/boards/regular mode/${boardType}.webp`;
+        }
     });
 }
 
