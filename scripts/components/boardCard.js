@@ -33,8 +33,17 @@ async function generateBoardPreview(board) {
             ctx.drawImage(boardImage, offsetX, offsetY, drawWidth, drawHeight);
 
             // --- Draw Grid ---
+            let rows;
+            if (board.mode === 'regular mode') {
+                rows = 3;
+            } else if (board.mode === 'guild') {
+                rows = 4; // Guild Raid (6x4)
+            } else if (board.mode === 'challenge') {
+                rows = 5; // Guild Battle (6x5)
+            }
+
             const gridConfig = {
-                rows: board.mode === 'regular mode' ? 3 : 5,
+                rows: rows,
                 cols: 6
             };
             
