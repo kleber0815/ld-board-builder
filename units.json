@@ -54,7 +54,8 @@
     { "name": "Vayne", "img": "assets/units/Mythic/Vayne.webp", "label": "Vayne" },
     { "name": "Verdee", "img": "assets/units/Mythic/Verdee.webp", "label": "Verdee" },
     { "name": "Watt", "img": "assets/units/Mythic/Watt.webp", "label": "Watt" },
-    { "name": "Zap", "img": "assets/units/Mythic/Zap.webp", "label": "Zap" }
+    { "name": "Zap", "img": "assets/units/Mythic/Zap.webp", "label": "Zap" },
+    { "name": "Roka", "img": "assets/units/Mythic/Roka.webp", "label": "Roka" }
   ],
   "immortal": [
     { "name": "Immo_Ato", "img": "assets/units/Immortal/Immo_Ato.webp", "label": "Immo Ato" },
@@ -65,6 +66,8 @@
     { "name": "Immo_Ninja", "img": "assets/units/Immortal/Immo_Ninja.webp", "label": "Immo Ninja" },
     { "name": "Immo_Pulse", "img": "assets/units/Immortal/Immo_Pulse.webp", "label": "Immo Pulse" },
     { "name": "Immo_Vayne", "img": "assets/units/Immortal/Immo_Vayne.webp", "label": "Immo Vayne" },
-    { "name": "Immo_Dragon", "img": "assets/units/Immortal/Immo_Dragon.webp", "label": "Immo Dragon" }
+    { "name": "Immo_Roka", "img": "assets/units/Immortal/Immo_Roka.webp", "label": "Immo Roka" },
+    { "name": "Immo_Grav", "img": "assets/units/Immortal/Immo_Grav.webp", "label": "Immo Grav" },
+    { "name": "Immo_Batman", "img": "assets/units/Immortal/Immo_Batman.webp", "label": "Immo Batman" }
   ]
 }
