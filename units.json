@@ -68,6 +68,7 @@
     { "name": "Immo_Vayne", "img": "assets/units/Immortal/Immo_Vayne.webp", "label": "Immo Vayne" },
     { "name": "Immo_Roka", "img": "assets/units/Immortal/Immo_Roka.webp", "label": "Immo Roka" },
     { "name": "Immo_Grav", "img": "assets/units/Immortal/Immo_Grav.webp", "label": "Immo Grav" },
-    { "name": "Immo_Batman", "img": "assets/units/Immortal/Immo_Batman.webp", "label": "Immo Batman" }
+    { "name": "Immo_Batman", "img": "assets/units/Immortal/Immo_Batman.webp", "label": "Immo Batman" },
+    { "name": "Immo_Dragon", "img": "assets/units/Immortal/Immo_Dragon.webp", "label": "Immo Dragon" }
   ]
 }
