@@ -70,6 +70,7 @@
     { "name": "Immo_Grav", "img": "assets/units/Immortal/Immo_Grav.webp", "label": "Immo Grav" },
     { "name": "Immo_Batman", "img": "assets/units/Immortal/Immo_Batman.webp", "label": "Immo Batman" },
     { "name": "Immo_Dragon", "img": "assets/units/Immortal/Immo_Dragon.webp", "label": "Immo Dragon" },
-    { "name": "Immo_Meow", "img": "assets/units/Immortal/Immo_Meow.webp", "label": "Immo Meow" }
+    { "name": "Immo_Meow", "img": "assets/units/Immortal/Immo_Meow.webp", "label": "Immo Meow" },
+    { "name": "Immo_Penguin", "img": "assets/units/Immortal/Immo_Penguin.webp", "label": "Immo Penguin" }
   ]
 }
