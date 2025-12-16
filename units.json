@@ -55,7 +55,8 @@
     { "name": "Verdee", "img": "assets/units/Mythic/Verdee.webp", "label": "Verdee" },
     { "name": "Watt", "img": "assets/units/Mythic/Watt.webp", "label": "Watt" },
     { "name": "Zap", "img": "assets/units/Mythic/Zap.webp", "label": "Zap" },
-    { "name": "Roka", "img": "assets/units/Mythic/Roka.webp", "label": "Roka" }
+    { "name": "Roka", "img": "assets/units/Mythic/Roka.webp", "label": "Roka" },
+    { "name": "Birdraw", "img": "assets/units/Mythic/Birdraw.webp", "label": "Birdraw" }
   ],
   "immortal": [
     { "name": "Immo_Ato", "img": "assets/units/Immortal/Immo_Ato.webp", "label": "Immo Ato" },
@@ -71,6 +72,7 @@
     { "name": "Immo_Batman", "img": "assets/units/Immortal/Immo_Batman.webp", "label": "Immo Batman" },
     { "name": "Immo_Dragon", "img": "assets/units/Immortal/Immo_Dragon.webp", "label": "Immo Dragon" },
     { "name": "Immo_Meow", "img": "assets/units/Immortal/Immo_Meow.webp", "label": "Immo Meow" },
+    { "name": "Immo_Birdraw", "img": "assets/units/Immortal/Immo_Birdraw.webp", "label": "Immo Birdraw" },
     { "name": "Immo_Penguin", "img": "assets/units/Immortal/Immo_Penguin.webp", "label": "Immo Penguin" }
   ]
 }
