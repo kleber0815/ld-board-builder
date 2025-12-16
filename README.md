@@ -2,7 +2,7 @@
 
 A web-based board builder application for the Lucky Defense game community. Create, share, and discover custom game board layouts with an intuitive drag-and-drop interface.
 
-This Project was fully build by the Cursor IDE AI.
+This Project was fully build with the help of AI.
 
 ## 🎮 Features
 
@@ -24,33 +24,6 @@ This Project was fully build by the Cursor IDE AI.
 - **Dark/Light Theme**: Toggle between themes for comfortable viewing
 - **Screenshot Export**: Capture and download your board layouts as images
 - **Intuitive Navigation**: Clean, modern interface with easy-to-use controls
-
-## 🚀 Getting Started
-
-### Prerequisites
-- Modern web browser (Chrome, Firefox, Safari, Edge)
-- No additional software installation required
-
-### Installation
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/ld-board-builder.git
-   cd ld-board-builder
-   ```
-
-2. Open `index.html` in your web browser, or serve the files using a local web server:
-   ```bash
-   # Using Python 3
-   python -m http.server 8000
-   
-   # Using Node.js (if you have http-server installed)
-   npx http-server
-   
-   # Using PHP
-   php -S localhost:8000
-   ```
-
-3. Navigate to `http://localhost:8000` in your browser
 
 ## 📖 How to Use
 
