@@ -39,7 +39,8 @@ async function generateBoardPreview(board) {
             } else if (board.mode === 'guild') {
                 rows = 4; // Guild Raid (6x4)
             } else if (board.mode === 'challenge') {
-                rows = 5; // Guild Battle (6x5)
+                // Check if this is the 'endless' map (3x6) or default challenge (5x6)
+                rows = (board.board_type === 'endless') ? 3 : 5;
             }
 
             const gridConfig = {
@@ -49,10 +50,12 @@ async function generateBoardPreview(board) {
             
             // These are percentages to apply to the drawn image size.
             const margins = board.mode === 'regular mode'
-            ? { top: 0.12, right: 0.065, bottom: 0.20, left: 0.08 }
-            : board.mode === 'guild'
-            ? { top: 0.12, right: 0.045, bottom: 0.15, left: 0.045 } // Guild Raid (6x4)
-            : { top: 0.08, right: 0.045, bottom: 0.11, left: 0.045 }; // Guild Battle/Challenge (6x5)
+                ? { top: 0.12, right: 0.065, bottom: 0.20, left: 0.08 } // Regular (3x6)
+                : board.mode === 'guild'
+                ? { top: 0.12, right: 0.045, bottom: 0.15, left: 0.045 } // Guild Raid (6x4)
+                : (board.board_type === 'endless')
+                ? { top: 0.12, right: 0.045, bottom: 0.10, left: 0.04 } // Endless mode (3x6)
+                : { top: 0.08, right: 0.045, bottom: 0.11, left: 0.045 }; // Default challenge (5x6)
 
             const marginTop = drawHeight * margins.top;
             const marginRight = drawWidth * margins.right;

@@ -29,7 +29,8 @@ const DiscoverPage = {
                 { id: 'graid', name: 'Guild Raid' }
             ],
             "Challange Maps": [
-                { id: 'extreme', name: 'Extreme Mode' }
+                { id: 'extreme', name: 'Extreme' },
+                { id: 'endless', name: 'Endless' }
             ]
         };
         const mapFilterCheckboxes = Object.entries(maps).map(([category, mapList]) => `

@@ -2,15 +2,18 @@ import { getBoardById } from '../api.js';
 import { showInfoModal } from '../components/modal.js';
 
 // Screenshot function for view page
-async function takeScreenshot(boardElement, mode, title) {
+async function takeScreenshot(boardElement, mode, title, boardType) {
     // Set fixed size based on mode, matching aspect ratio
     let width, height;
     if (mode === 'guild') {
         width = 600;
         height = 330;
+    } else if (mode === 'challenge' && boardType === 'endless') {
+        width = 600;
+        height = 280; // 3x6 endless mode
     } else if (mode === 'challenge') {
         width = 600;
-        height = 420; // Reduced from 500px to remove empty space
+        height = 420; // 5x6 challenge
     } else {
         width = 600;
         height = 300;
@@ -29,17 +32,22 @@ async function takeScreenshot(boardElement, mode, title) {
     document.body.appendChild(clone);
 
     // SPECIAL HANDLING FOR CHALLENGE MODE SCREENSHOT
-    if (mode === 'challenge') {
+    if (mode === 'challenge' && boardType === 'endless') {
         const gridClone = clone.querySelector('.board-grid');
         if (gridClone) {
-            // Adjust the grid offsets for the screenshot specifically
-            // Convert percentage offsets to fixed pixels based on original 500px height
-            gridClone.style.top = '22px';    // 500px * 13% = 65px
-            gridClone.style.right = '30px';  // 600px * 5% = 30px
-            gridClone.style.bottom = '40px'; // 500px * 16% = 80px
-            gridClone.style.left = '30px';   // 600px * 5% = 30px
-            
-            // Override the CSS variable usage with fixed pixel values
+            gridClone.style.top = '32px';
+            gridClone.style.right = '30px'; 
+            gridClone.style.bottom = '24px';
+            gridClone.style.left = '30px';
+            gridClone.style.inset = '32px 30px 24px 30px';
+        }
+    } else if (mode === 'challenge') {
+        const gridClone = clone.querySelector('.board-grid');
+        if (gridClone) {
+            gridClone.style.top = '22px';
+            gridClone.style.right = '30px';
+            gridClone.style.bottom = '40px';
+            gridClone.style.left = '30px';
             gridClone.style.inset = '22px 30px 40px 30px';
         }
     }
@@ -120,9 +128,10 @@ const ViewPage = {
             if (mode === 'regular mode') {
                 gridConfig = { rows: 3, cols: 6 };
             } else if (mode === 'guild') {
-                gridConfig = { rows: 4, cols: 6 }; // Changed from 5 to 4 for Guild Raid
+                gridConfig = { rows: 4, cols: 6 };
             } else if (mode === 'challenge') {
-                gridConfig = { rows: 5, cols: 6 }; // New category for Guild Battle
+                // Check if this is the 'endless' map (3x6) or default challenge (5x6)
+                gridConfig = { rows: (board_type === 'endless') ? 3 : 5, cols: 6 };
             }
 
             // Update path construction for map images
@@ -162,9 +171,9 @@ const ViewPage = {
             
             // Apply percent-based grid offsets for alignment
             if (mode === 'regular mode' && board_type === 'hell') {
-                boardGrid.style.setProperty('--grid-offset-top', '10%'); // 6% + 4%
+                boardGrid.style.setProperty('--grid-offset-top', '10%');
                 boardGrid.style.setProperty('--grid-offset-right', '5%');
-                boardGrid.style.setProperty('--grid-offset-bottom', '18%'); // 20% - 2%
+                boardGrid.style.setProperty('--grid-offset-bottom', '18%');
                 boardGrid.style.setProperty('--grid-offset-left', '5%');
             } else if (mode === 'regular mode') {
                 boardGrid.style.setProperty('--grid-offset-top', '6%');
@@ -176,12 +185,20 @@ const ViewPage = {
                 boardGrid.style.setProperty('--grid-offset-right', '5%');
                 boardGrid.style.setProperty('--grid-offset-bottom', '20%');
                 boardGrid.style.setProperty('--grid-offset-left', '5%');
+            } else if (mode === 'challenge' && board_type === 'endless') {
+                // Endless mode (3x6) - use similar offsets to regular mode
+                boardGrid.style.setProperty('--grid-offset-top', '28%');
+                boardGrid.style.setProperty('--grid-offset-right', '5%');
+                boardGrid.style.setProperty('--grid-offset-bottom', '28%');
+                boardGrid.style.setProperty('--grid-offset-left', '5%');
             } else if (mode === 'challenge') {
+                // Default challenge mode (5x6)
                 boardGrid.style.setProperty('--grid-offset-top', '13%');
                 boardGrid.style.setProperty('--grid-offset-right', '5%');
                 boardGrid.style.setProperty('--grid-offset-bottom', '16%');
                 boardGrid.style.setProperty('--grid-offset-left', '5%');
             }
+
             boardGrid.style.position = 'absolute';
             boardGrid.style.inset = 'var(--grid-offset-top) var(--grid-offset-right) var(--grid-offset-bottom) var(--grid-offset-left)';
             boardGrid.style.width = 'auto';
@@ -219,7 +236,7 @@ const ViewPage = {
             const screenshotBtn = page.querySelector('#screenshot-btn');
             const boardElement = page.querySelector('.board-wrapper');
             screenshotBtn.addEventListener('click', () => {
-                takeScreenshot(boardElement, mode, title);
+                takeScreenshot(boardElement, mode, title, board_type);
             });
 
         } catch (error) {
