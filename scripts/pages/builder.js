@@ -25,7 +25,13 @@ const MAPS = {
         { id: 'graid', name: 'Guild Raid', img: 'assets/boards/guild/graid.webp' },
     ],
     challenge: [
-        { id: 'extreme', name: 'Extreme Mode', img: 'assets/boards/challenge/extreme.webp' }
+        { id: 'extreme', name: 'Extreme', img: 'assets/boards/challenge/extreme.webp' },
+        { 
+            id: 'endless', 
+            name: 'Endless', 
+            img: 'assets/boards/challenge/endless.webp',
+            grid: { rows: 3, cols: 6 } // Override default challenge grid
+        }
     ]
 };
 
@@ -126,17 +132,20 @@ function renderUnitPalette() {
 
 /** Renders the board grid based on the current mode */
 function renderBoardGrid() {
-    let gridConfig;
-    if (currentMode === 'regular mode') {
-        gridConfig = REGULAR_GRID;
-    } else if (currentMode === 'guild') {
-        gridConfig = GUILD_GRID; // Now 6x4 for Guild Raid
-    } else if (currentMode === 'challenge') {
-        gridConfig = CHALLENGE_GRID; // 6x5 for Guild Battle
-    }
-
     const mapData = MAPS[currentMode].find(m => m.id === currentMap);
     const mapImageEl = boardArea.querySelector('.map-image');
+    
+    // NOW check for grid config
+    let gridConfig;
+    if (mapData && mapData.grid) {
+        gridConfig = mapData.grid;
+    } else if (currentMode === 'regular mode') {
+        gridConfig = REGULAR_GRID;
+    } else if (currentMode === 'guild') {
+        gridConfig = GUILD_GRID;
+    } else if (currentMode === 'challenge') {
+        gridConfig = CHALLENGE_GRID;
+    }
 
     // Show loading state for grid
     boardGrid.innerHTML = '<p>Loading map...</p>';
@@ -165,6 +174,11 @@ function renderBoardGrid() {
             boardGrid.style.setProperty('--grid-offset-top', '8%');
             boardGrid.style.setProperty('--grid-offset-right', '5%');
             boardGrid.style.setProperty('--grid-offset-bottom', '14%');
+            boardGrid.style.setProperty('--grid-offset-left', '5%');
+        } else if (currentMode === 'challenge' && currentMap === 'endless') {
+            boardGrid.style.setProperty('--grid-offset-top', '10%');
+            boardGrid.style.setProperty('--grid-offset-right', '5%');
+            boardGrid.style.setProperty('--grid-offset-bottom', '16%');
             boardGrid.style.setProperty('--grid-offset-left', '5%');
         } else if (currentMode === 'challenge') {
             boardGrid.style.setProperty('--grid-offset-top', '6%');
@@ -249,7 +263,13 @@ function handleModeChange(newMode) {
 function handleMapChange(newMap) {
     if (currentMap === newMap) return;
     currentMap = newMap;
-    renderBoardGrid(); // Re-render with new map bg, but keep units
+    
+    // Clear board when switching maps in challenge mode only
+    if (currentMode === 'challenge') {
+        boardState = {};
+    }
+    
+    renderBoardGrid();
 }
 
 function handleCellClick(cell, positionKey) {
@@ -297,15 +317,26 @@ function renderMapButtons() {
 
 async function takeScreenshot() {
     const boardElement = pageElement.querySelector('.board-wrapper');
+    
+    // Get current map data to check for custom grid
+    const mapData = MAPS[currentMode].find(m => m.id === currentMap);
+    const hasCustomGrid = mapData && mapData.grid;
+    
     // Determine mode and set target size
     let width, height;
     if (currentMode === 'guild') {
         width = 600;
-        height = 330; // Reduced from 400px
-    } else if (currentMode === 'challenge') {
+        height = 330;
+    } else if (currentMode === 'challenge' && hasCustomGrid && mapData.grid.rows === 3) {
+        // 3x6 challenge map
         width = 600;
-        height = 420; // Reduced from 500px
+        height = 280;
+    } else if (currentMode === 'challenge') {
+        // Default 5x6 challenge maps
+        width = 600;
+        height = 420;
     } else {
+        // Regular mode (3x6)
         width = 600;
         height = 300;
     }
@@ -318,38 +349,42 @@ async function takeScreenshot() {
     clone.style.left = '-9999px';
     clone.style.top = '0';
     clone.style.zIndex = '-1';
-    // Remove background color to make it transparent
     clone.style.backgroundColor = 'transparent';
     document.body.appendChild(clone);
 
-    // SPECIAL HANDLING FOR GUILD MODE SCREENSHOT (400px → 330px)
+    // SPECIAL HANDLING FOR GUILD MODE SCREENSHOT
     if (currentMode === 'guild') {
         const gridClone = clone.querySelector('.board-grid');
         if (gridClone) {
-            // Adjust the grid offsets for the screenshot specifically
-            // Convert percentage offsets to fixed pixels based on original 400px height
-            gridClone.style.top = '22px';    // 400px * 17% = 68px
-            gridClone.style.right = '30px';  // 600px * 5% = 30px
-            gridClone.style.bottom = '40px'; // 400px * 20% = 80px
-            gridClone.style.left = '30px';   // 600px * 5% = 30px
-            
-            // Override the CSS variable usage with fixed pixel values
+            gridClone.style.top = '22px';
+            gridClone.style.right = '30px';
+            gridClone.style.bottom = '40px';
+            gridClone.style.left = '30px';
             gridClone.style.inset = '22px 30px 40px 30px';
         }
     }
 
-    // SPECIAL HANDLING FOR CHALLENGE MODE SCREENSHOT (500px → 420px)
-    if (currentMode === 'challenge') {
+    // SPECIAL HANDLING FOR 3x6 CHALLENGE MODE SCREENSHOT
+    if (currentMode === 'challenge' && hasCustomGrid && mapData.grid.rows === 3) {
         const gridClone = clone.querySelector('.board-grid');
         if (gridClone) {
-            // Adjust the grid offsets for the screenshot specifically
-            // Convert percentage offsets to fixed pixels based on original 500px height
-            gridClone.style.top = '24px';    // 500px * 13% = 65px
-            gridClone.style.right = '30px';  // 600px * 5% = 30px
-            gridClone.style.bottom = '40px'; // 500px * 16% = 80px
-            gridClone.style.left = '30px';   // 600px * 5% = 30px
-            
-            // Override the CSS variable usage with fixed pixel values
+            // Recalculated for 280px height
+            gridClone.style.top = '32px';
+            gridClone.style.right = '30px'; 
+            gridClone.style.bottom = '24px';
+            gridClone.style.left = '30px';
+            gridClone.style.inset = '32px 30px 24px 30px';
+        }
+    }
+
+    // SPECIAL HANDLING FOR DEFAULT 5x6 CHALLENGE MODE SCREENSHOT
+    if (currentMode === 'challenge' && (!hasCustomGrid || mapData.grid.rows === 5)) {
+        const gridClone = clone.querySelector('.board-grid');
+        if (gridClone) {
+            gridClone.style.top = '24px';
+            gridClone.style.right = '30px';
+            gridClone.style.bottom = '40px';
+            gridClone.style.left = '30px';
             gridClone.style.inset = '24px 30px 40px 30px';
         }
     }
@@ -360,10 +395,9 @@ async function takeScreenshot() {
             backgroundColor: null,
             width,
             height,
-            scale: 1 // Prevents upscaling on high-DPI screens
+            scale: 1
         });
         const link = document.createElement('a');
-        // Format date as YYYY-MM-DD-HH-mm-ss
         const now = new Date();
         const pad = n => n.toString().padStart(2, '0');
         const dateStr = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}-${pad(now.getHours())}-${pad(now.getMinutes())}-${pad(now.getSeconds())}`;
