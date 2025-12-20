@@ -1,6 +1,7 @@
 // This is a large module, so we'll structure it clearly.
-import { addBoard } from '../api.js';
+import { addBoard, recordAnalyticsEvent } from '../api.js';
 import { createModal, showModal, showInfoModal } from '../components/modal.js';
+import * as utils from '../utils.js';
 
 // --- Module State ---
 let currentMode = 'regular mode'; // 'regular' or 'guild'
@@ -404,6 +405,33 @@ async function takeScreenshot() {
         link.download = `Board-${dateStr}.png`;
         link.href = canvas.toDataURL('image/png');
         link.click();
+        const userId = await (async () => {
+            if (typeof utils.getAnonymizedUserId === 'function') {
+                return await utils.getAnonymizedUserId();
+            }
+            let uid = localStorage.getItem('ld_uid');
+            if (!uid) {
+                uid = (crypto && typeof crypto.randomUUID === 'function') ? crypto.randomUUID() : Math.random().toString(36).slice(2);
+                localStorage.setItem('ld_uid', uid);
+            }
+            if (crypto && crypto.subtle && typeof TextEncoder !== 'undefined') {
+                const encoder = new TextEncoder();
+                const data = encoder.encode(uid + '|ld_board_builder_v1');
+                const digest = await crypto.subtle.digest('SHA-256', data);
+                const bytes = new Uint8Array(digest);
+                let hex = '';
+                for (let i = 0; i < bytes.length; i++) hex += bytes[i].toString(16).padStart(2, '0');
+                return hex;
+            }
+            return uid;
+        })();
+        recordAnalyticsEvent({
+            event_type: 'download',
+            board_id: null,
+            view_link: null,
+            user_id: userId,
+            metadata: { mode: currentMode, map: currentMap, page: 'builder' }
+        });
     } catch (error) {
         console.error('Error taking screenshot:', error);
         showInfoModal('Error', 'Could not take screenshot. See console for details.');

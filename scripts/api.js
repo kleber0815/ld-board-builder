@@ -155,4 +155,50 @@ export async function getAdminBoards() {
         throw error;
     }
     return data;
-} 
+}
+
+export async function recordAnalyticsEvent(event) {
+    try {
+        const payload = {
+            occurred_at: event.occurred_at || new Date().toISOString(),
+            event_type: event.event_type,
+            board_id: event.board_id || null,
+            view_link: event.view_link || null,
+            user_id: event.user_id || null,
+            metadata: event.metadata || {}
+        };
+        const { error } = await supabase
+            .from('analytics_metrics')
+            .insert([payload]);
+        if (error) {
+            console.warn('Failed to record analytics event:', error);
+            return null;
+        }
+        return true;
+    } catch (e) {
+        console.warn('Unexpected error recording analytics event:', e);
+        return null;
+    }
+}
+
+export async function getAnalyticsEvents({ from, to, boardId, eventType } = {}) {
+    try {
+        let query = supabase
+            .from('analytics_metrics')
+            .select('*', { count: 'exact' })
+            .order('occurred_at', { ascending: false });
+        if (from) query = query.gte('occurred_at', from);
+        if (to) query = query.lte('occurred_at', to);
+        if (boardId) query = query.eq('board_id', boardId);
+        if (eventType) query = query.eq('event_type', eventType);
+        const { data, error, count } = await query;
+        if (error) {
+            console.warn('Failed to fetch analytics events:', error);
+            return { data: [], count: 0 };
+        }
+        return { data, count };
+    } catch (e) {
+        console.warn('Unexpected error fetching analytics events:', e);
+        return { data: [], count: 0 };
+    }
+}

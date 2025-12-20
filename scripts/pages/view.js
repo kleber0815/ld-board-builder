@@ -1,5 +1,6 @@
-import { getBoardById } from '../api.js';
+import { getBoardById, recordAnalyticsEvent } from '../api.js';
 import { showInfoModal } from '../components/modal.js';
+import * as utils from '../utils.js';
 
 // Screenshot function for view page
 async function takeScreenshot(boardElement, mode, title, boardType) {
@@ -122,6 +123,35 @@ const ViewPage = {
             const { title, description, created_at, board_data, mode, board_type } = board;
             const units = board_data.units || [];
             const createdAtDate = new Date(created_at).toLocaleString();
+            try {
+                const userId = await (async () => {
+                    if (typeof utils.getAnonymizedUserId === 'function') {
+                        return await utils.getAnonymizedUserId();
+                    }
+                    let uid = localStorage.getItem('ld_uid');
+                    if (!uid) {
+                        uid = (crypto && typeof crypto.randomUUID === 'function') ? crypto.randomUUID() : Math.random().toString(36).slice(2);
+                        localStorage.setItem('ld_uid', uid);
+                    }
+                    if (crypto && crypto.subtle && typeof TextEncoder !== 'undefined') {
+                        const encoder = new TextEncoder();
+                        const data = encoder.encode(uid + '|ld_board_builder_v1');
+                        const digest = await crypto.subtle.digest('SHA-256', data);
+                        const bytes = new Uint8Array(digest);
+                        let hex = '';
+                        for (let i = 0; i < bytes.length; i++) hex += bytes[i].toString(16).padStart(2, '0');
+                        return hex;
+                    }
+                    return uid;
+                })();
+                recordAnalyticsEvent({
+                    event_type: 'view',
+                    board_id: board.id || null,
+                    view_link: board.view_link || null,
+                    user_id: userId,
+                    metadata: { mode, board_type, page: 'view' }
+                });
+            } catch (_) {}
 
             // Determine grid configuration based on mode
             let gridConfig;
@@ -237,6 +267,35 @@ const ViewPage = {
             const boardElement = page.querySelector('.board-wrapper');
             screenshotBtn.addEventListener('click', () => {
                 takeScreenshot(boardElement, mode, title, board_type);
+                (async () => {
+                    const userId = await (async () => {
+                        if (typeof utils.getAnonymizedUserId === 'function') {
+                            return await utils.getAnonymizedUserId();
+                        }
+                        let uid = localStorage.getItem('ld_uid');
+                        if (!uid) {
+                            uid = (crypto && typeof crypto.randomUUID === 'function') ? crypto.randomUUID() : Math.random().toString(36).slice(2);
+                            localStorage.setItem('ld_uid', uid);
+                        }
+                        if (crypto && crypto.subtle && typeof TextEncoder !== 'undefined') {
+                            const encoder = new TextEncoder();
+                            const data = encoder.encode(uid + '|ld_board_builder_v1');
+                            const digest = await crypto.subtle.digest('SHA-256', data);
+                            const bytes = new Uint8Array(digest);
+                            let hex = '';
+                            for (let i = 0; i < bytes.length; i++) hex += bytes[i].toString(16).padStart(2, '0');
+                            return hex;
+                        }
+                        return uid;
+                    })();
+                    recordAnalyticsEvent({
+                        event_type: 'download',
+                        board_id: board.id || null,
+                        view_link: board.view_link || null,
+                        user_id: userId,
+                        metadata: { mode, board_type, page: 'view' }
+                    });
+                })();
             });
 
         } catch (error) {

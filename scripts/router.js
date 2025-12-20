@@ -1,4 +1,6 @@
 import { supabase } from './supabase.js';
+import { recordAnalyticsEvent } from './api.js';
+import * as utils from './utils.js';
 
 // --- Page Loading Functions ---
 // Each function is responsible for fetching and rendering the HTML for a page.
@@ -64,6 +66,40 @@ async function router() {
             appRoot.appendChild(pageContent);
             if (typeof pageContent.afterRender === 'function') {
                 pageContent.afterRender();
+            }
+            if (path !== 'admin') {
+                (async () => {
+                    try {
+                        let uid = null;
+                        if (typeof utils.getAnonymizedUserId === 'function') {
+                            uid = await utils.getAnonymizedUserId();
+                        } else {
+                            let local = localStorage.getItem('ld_uid');
+                            if (!local) {
+                                local = (crypto && typeof crypto.randomUUID === 'function') ? crypto.randomUUID() : Math.random().toString(36).slice(2);
+                                localStorage.setItem('ld_uid', local);
+                            }
+                            if (crypto && crypto.subtle && typeof TextEncoder !== 'undefined') {
+                                const encoder = new TextEncoder();
+                                const data = encoder.encode(local + '|ld_board_builder_v1');
+                                const digest = await crypto.subtle.digest('SHA-256', data);
+                                const bytes = new Uint8Array(digest);
+                                let hex = '';
+                                for (let i = 0; i < bytes.length; i++) hex += bytes[i].toString(16).padStart(2, '0');
+                                uid = hex;
+                            } else {
+                                uid = local;
+                            }
+                        }
+                        recordAnalyticsEvent({
+                            event_type: 'view',
+                            board_id: null,
+                            view_link: null,
+                            user_id: uid,
+                            metadata: { route: path, query: Object.fromEntries(params.entries()) }
+                        });
+                    } catch (_) {}
+                })();
             }
         }
     } catch (error) {

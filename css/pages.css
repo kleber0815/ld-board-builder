@@ -328,6 +328,12 @@
     text-align: center;
     margin-bottom: var(--space-lg);
 }
+/* Active state for Admin tabs to match builder buttons */
+.page-admin .admin-tabs .btn.active {
+    background-color: var(--color-primary);
+    color: white;
+    border-color: var(--color-primary);
+}
 
 .admin-filters {
     display: flex;
