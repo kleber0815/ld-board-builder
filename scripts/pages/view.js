@@ -71,7 +71,7 @@ async function takeScreenshot(boardElement, mode, title, boardType) {
     try {
         const canvas = await html2canvas(clone, {
             useCORS: true,
-            backgroundColor: null,
+            backgroundColor: 'rgba(0,0,0,0)',
             width,
             height,
             scale: 1 // Prevents upscaling on high-DPI screens

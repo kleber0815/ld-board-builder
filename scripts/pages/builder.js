@@ -393,7 +393,7 @@ async function takeScreenshot() {
     try {
         const canvas = await html2canvas(clone, {
             useCORS: true,
-            backgroundColor: null,
+            backgroundColor: 'rgba(0,0,0,0)',
             width,
             height,
             scale: 1
